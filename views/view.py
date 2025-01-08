@@ -30,7 +30,6 @@ class SubscriptionService:
         with Session(self.engine) as session:
             statement = select(Payments).join(Subscription).where(Subscription.empresa==subscription.empresa)
             results = session.exec(statement).all()
-            print(results)
             if self._has_pay(results):
                 question = input('Essa conta já foi paga esse mês, deseja pagar novamente? Y ou N: ')
 
