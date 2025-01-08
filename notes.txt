@@ -1,0 +1,16 @@
+pip install env
+
+to create: {
+    python3 -m venv ven - for Linux 
+    python -m venv venv - for Windows
+}
+
+to activate: {
+    source venv/binactivate - for Linux
+    venv\Scripts\Activate - for Windows
+
+Activating powershell to run scripts:
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+}
