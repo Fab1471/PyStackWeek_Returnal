@@ -47,3 +47,9 @@ ss = SubscriptionService(engine)
 assinaturas = ss.list_all()
 for i, s in enumerate(assinaturas):
     print(f'[{i}] -> {s.empresa}')
+
+x = int(input())
+
+ss.pay(assinaturas[x])
+
+
