@@ -14,3 +14,9 @@ Activating powershell to run scripts:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 }
+
+
+to fix {
+    opt 3
+    opt 5
+}

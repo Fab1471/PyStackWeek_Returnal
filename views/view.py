@@ -96,16 +96,24 @@ class SubscriptionService:
     def gen_chart(self):
         last_12_months = self._get_last12_months_native()
         values_for_months = self._get_values_for_months(last_12_months)
+        last_12_months = list(map(lambda x: x[0], self._get_last12_months_native()))
         
-        last_12_months2 = []
-        for i in last_12_months:
-            last_12_months2.append(i[0])
-        print(last_12_months2)
         import matplotlib.pyplot as plt
         
-        
-        plt.plot(last_12_months2, values_for_months)
+        plt.plot(last_12_months, values_for_months)
         plt.show()
+
+'''
 
 ss = SubscriptionService(engine)
 print(ss.gen_chart())
+
+'''
+
+'''
+        last_12_months2 = []
+        for i in last_12_months:
+            last_12_months2.append(i[0])
+
+        print(last_12_months2)
+'''
