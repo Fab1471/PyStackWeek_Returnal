@@ -19,3 +19,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 to fix {
     opt 5
 }
+
+
+https://grizzly-amaranthus-f6a.notion.site/Projeto-1-Python-Puro-15b6cf8ea89f80c9a3e9d2882eed45e6 - A1
+https://grizzly-amaranthus-f6a.notion.site/Projeto-2-Web-15b6cf8ea89f80728fdfe8223bbdcb5c - A2
