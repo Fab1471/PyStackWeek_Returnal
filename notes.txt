@@ -16,3 +16,13 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 }
 
 https://grizzly-amaranthus-f6a.notion.site/Projeto-2-Web-15b6cf8ea89f80728fdfe8223bbdcb5c - A2
+
+
+mvt: {
+
+    models = conexões com database
+    views = lógica de negócios, lógica do app
+    templates = interface
+}
+
+1st: busca nas urls do projeto, se existir, busca nas urls do app, se existir, exibe ou vai redirecionando (neste caso redirecionamos para views,a views recebeu a requisiçaõ e devolveu uma resposta http pro usar escrito "Hello World). .
