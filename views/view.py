@@ -40,15 +40,18 @@ class SubscriptionService:
             session.add(pay)
             session.commit()
 
+    def total_value(self):
+        with Session(self.engine) as session:
+            statement = select(Subscription)
+            results = session.exec(statement).all()
+            
+        total = 0
+        for result in results:
+            total += result.valor
+
+        return float(total)
 
 ss = SubscriptionService(engine)
 
-assinaturas = ss.list_all()
-for i, s in enumerate(assinaturas):
-    print(f'[{i}] -> {s.empresa}')
-
-x = int(input())
-
-ss.pay(assinaturas[x])
-
+print(ss.total_value())
 
