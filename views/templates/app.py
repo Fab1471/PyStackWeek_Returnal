@@ -32,7 +32,7 @@ class UI:
             elif choice == 4:
                 self.subscription_service.gen_chart()
             elif choice == 5:
-                self.pay()
+                self.pay_s()
             else:
                 break
 
@@ -46,6 +46,7 @@ class UI:
         subscription = Subscription(empresa=empresa, site=site, data_assinatura=data_assinatura, valor=valor)
         self.subscription_service.create(subscription)
         print('Assinatura adicionada com sucesso.')
+
 
     def delete_subscription(self):
         subscriptions = self.subscription_service.list_all()
@@ -63,5 +64,25 @@ class UI:
     def total_value(self):
         print(f'Seu valor total mensal em assinaturas é: {self.subscription_service.total_value()}')
 
+
+    def pay_s(self):
+        subscriptions = self.subscription_service.list_all()
+
+        if not subscriptions:
+            print("Nenhuma assinatura encontrada.")
+            return
+
+        print("Escolha a assinatura para pagar:")
+        for i in subscriptions:
+            print(f'[{i.id}] -> {i.empresa}')
+
+        choice = int(input("Escolha a assinatura: "))
+
+        selected_subscription = next((sub for sub in subscriptions if sub.id == choice), None)
+        if selected_subscription:
+            self.subscription_service.pay(selected_subscription)
+            print(f"Pagamento para {selected_subscription.empresa} realizado com sucesso.")
+        else:
+            print("Assinatura não encontrada.")
 
 UI().start()
