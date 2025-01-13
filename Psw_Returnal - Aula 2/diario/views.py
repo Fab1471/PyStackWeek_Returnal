@@ -8,7 +8,8 @@ def home(request):
 
 def escrever(request):
     if request.method == 'GET':
-        return render(request, 'escrever.html')
+        pessoas = Pessoa.objects.all()
+        return render(request, 'escrever.html', {'pessoas': pessoas})
     elif request.method == 'POST':
         titulo = request.POST.get('titulo')
         tags = request.POST.getlist('tags')
