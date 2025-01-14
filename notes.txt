@@ -26,3 +26,9 @@ mvt: {
 }
 
 1st: busca nas urls do projeto, se existir, busca nas urls do app, se existir, exibe ou vai redirecionando (neste caso redirecionamos para views,a views recebeu a requisiçaõ e devolveu uma resposta http pro usar escrito "Hello World). .
+
+
+
+Dica de ouro para evitar aquela dupla pasta no início = na hora do start project coloque um ponto após o nome do project, assim:
+
+django-admin startproject core .
