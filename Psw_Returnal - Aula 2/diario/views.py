@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . models import Pessoa, Diario
+from datetime import datetime, timedelta
 
 # Create your views here.
 def home(request):
@@ -49,3 +50,15 @@ def cadastrar_pessoa(request):
         )
         pessoa.save()
         return redirect('escrever')
+
+def dia(request):
+    data = request.GET.get('data')
+    data_formatada = datetime.strptime(data, '%Y-%m-%d')
+    diarios = Diario.objects.filter(create_at__gte=data_formatada).filter(create_at__lte=data_formatada+timedelta(days=1))
+    return render(request, 'dia.html', {'diarios': diarios, 'total': diarios.count(), 'data': data})
+
+def excluir_dia(request):
+    dia = datetime.strptime(request.GET.get('data'), '%Y-%m-%d')
+    diarios = Diario.objects.filter(create_at__gte=dia).filter(create_at__lte=dia+timedelta(days=1))
+    diarios.delete()
+    return HttpResponse('Anotações excluídas com sucesso.')
