@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from . models import Pessoa
+from . models import Pessoa, Diario
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    textos = Diario.objects.all().order_by('create_at')[:3]
+    return render(request, 'home.html', {'textos': textos})
 
 def escrever(request):
     if request.method == 'GET':
@@ -15,7 +16,25 @@ def escrever(request):
         tags = request.POST.getlist('tags')
         pessoas = request.POST.getlist('pessoas')
         texto = request.POST.get('texto')
-        return HttpResponse(f'{titulo} - {tags} - {pessoas} - {texto}')
+
+        if len(titulo.strip()) == 0 or len(texto.strip()) == 0:
+            # TODO: Adicionar mensagens de erro. .
+            return redirect('escrever')
+        
+        diario = Diario(
+            titulo=titulo,
+            texto=texto
+        )
+
+        diario.set_tags(tags)
+        diario.save()
+
+        for i in pessoas:
+            pessoa = Pessoa.objects.get(id=i)
+            diario.pessoas.add(pessoa)
+        diario.save()
+        # TODO: Adicionar mensagens de sucesso. .
+        return redirect('escrever') #HttpResponse(f'{titulo} - {tags} - {pessoas} - {texto}')
 
 def cadastrar_pessoa(request):
     if request.method == 'GET':
