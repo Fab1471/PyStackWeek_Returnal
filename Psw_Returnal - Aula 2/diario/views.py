@@ -6,7 +6,14 @@ from datetime import datetime, timedelta
 # Create your views here.
 def home(request):
     textos = Diario.objects.all().order_by('create_at')[:3]
-    return render(request, 'home.html', {'textos': textos})
+    pessoas = Pessoa.objects.all()
+    nomes = [pessoa.nome for pessoa in pessoas]
+    for pessoa in pessoas:
+        qtds = []
+        qtd = Diario.objects.filter(pessoas=pessoa).count()
+        qtds.append(qtd)
+
+    return render(request, 'home.html', {'textos': textos, 'nomes': nomes, 'qtds': qtds})
 
 def escrever(request):
     if request.method == 'GET':
@@ -61,4 +68,4 @@ def excluir_dia(request):
     dia = datetime.strptime(request.GET.get('data'), '%Y-%m-%d')
     diarios = Diario.objects.filter(create_at__gte=dia).filter(create_at__lte=dia+timedelta(days=1))
     diarios.delete()
-    return HttpResponse('Anotações excluídas com sucesso.')
+    return redirect('escrever')
