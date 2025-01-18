@@ -26,3 +26,8 @@ class Links(models.Model):
 
     def expired(self):
         return True if timezone.now() > (self.create_at + self.expiration_time) else False
+
+class Clicks(models.Model):
+    link = models.ForeignKey(Links, on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField()
+    create_at = models.DateTimeField(auto_now_add=True)
