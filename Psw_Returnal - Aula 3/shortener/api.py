@@ -82,6 +82,11 @@ def statistics(request, link_id: int):
 
     return 200, {'uniques_clicks': uniques_clicks, 'total_clicks': total_clicks}
 
+def get_api_url(request, token):
+    scheme = request.scheme
+    host = request.get_host()
+    return f'{scheme}://{host}/api/{token}'
+
 @shortener_router.get('qrcode/{link_id}/', response={200: dict})
 def get_qrcode(request, link_id: int):
     link = get_object_or_404(Links, id=link_id)
@@ -91,7 +96,7 @@ def get_qrcode(request, link_id: int):
         box_size=10,
         border=4
     )
-    qr.add_data('Olá Mundo')
+    qr.add_data(get_api_url(request, link.token))
     qr.make(fit=True)
 
     content = BytesIO()
