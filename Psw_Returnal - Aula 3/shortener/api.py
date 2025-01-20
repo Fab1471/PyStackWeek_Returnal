@@ -1,5 +1,5 @@
 from ninja import Router
-from .schemas import LinkSchema
+from .schemas import LinkSchema, UpdateLinkSchema
 from .models import Links, Clicks
 from django.shortcuts import get_object_or_404, redirect
 
@@ -53,3 +53,20 @@ def redirect_link(request, token):
     click.save()
 
     return redirect(link.redirect_link)
+
+@shortener_router.put('/{link_id}/', response={200: UpdateLinkSchema, 409: dict})
+def update_link(request, link_id: int, link_schema: UpdateLinkSchema):
+    link = get_object_or_404(Links, id=link_id)
+
+    data = link_schema.dict()
+
+    token = data['token']
+    if token and Links.objects.filter(token=token).exclude(id=link_id).exists():
+        return 409, {'error': 'Token já existe, use outro.'}
+
+    for field, value in data.items():
+        if value:
+            setattr(link, field, value)
+
+    link.save()
+    return 200, link
